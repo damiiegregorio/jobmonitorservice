@@ -1,0 +1,166 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+#basePath: /api
+
+# Paths supported by the server application
+paths:
+  /modulelog:
+    get:
+      operationId: monitoring.read_all
+      tags:
+        - Job
+      summary: Read the entire set of job, sorted by last name
+      description: Read the entire set of job, sorted by last name
+      responses:
+        200:
+          description: Successfully read job set operation
+          schema:
+            type: array
+            items:
+              properties:
+                job_id:
+                  type: string
+                  format: uuid
+                  description: JOB ID
+                app_name:
+                  type: string
+                  description: App name
+                state:
+                  type: string
+                  description: State
+                timestamp:
+                  type: string
+                  description: Creation/Update timestamp of the job
+    post:
+      operationId: monitoring.create
+      tags:
+        - job
+      summary: Create a job
+      description: Create a new job
+      parameters:
+        - name: job
+          in: body
+          description: Job to create
+          schema:
+            type: object
+            required:
+              - app_name
+            properties:
+              app_name:
+                type: string
+                description: App name
+              state:
+                type: string
+                description: State
+      responses:
+        201:
+          description: Successfully created person
+
+
+  /modulelog/{job_id}:
+    get:
+      operationId: monitoring.read_one
+      tags:
+        - Job
+      summary: Read one job
+      description: Read one job
+      parameters:
+        - name: job_id
+          in: path
+          description: Id of the job to get
+          type: string
+          format: uuid
+          required: True
+      responses:
+        200:
+          description: Successfully read job from job data operation
+          schema:
+            type: object
+            properties:
+              job_id:
+                type: string
+                format: uuid
+                description: job_id of the person
+              app_name:
+                type: string
+                description: App name
+              state:
+                type: string
+                description: State
+              timestamp:
+                type: string
+                format: date
+                description: Creation/Update timestamp of the person record
+    delete:
+      operationId: monitoring.delete
+      tags:
+        - Job
+      summary: Delete a person from the job list
+      description: Delete a person
+      parameters:
+        - name: job_id
+          in: path
+          type: string
+          format: uuid
+          description: job_id of the person to delete
+          required: true
+      responses:
+        200:
+          description: Successfully deleted a person
+    put:
+      operationId: monitoring.update
+      tags:
+        - job
+      summary: Update a job
+      description: Update a job
+      parameters:
+        - name: job_id
+          in: path
+          description: job_id the person to update
+          type: string
+          format: uuid
+          required: True
+        - name: job
+          in: body
+          schema:
+            type: object
+            properties:
+              job_id:
+                type: string
+                format: uuid
+                description: Job ID
+              app_name:
+                type: string
+                description: App name
+              state:
+                type: string
+                description: State of the job
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
+      responses:
+        200:
+          description: Successfully updated person
+          schema:
+            properties:
+              job_id:
+                type: string
+                format: uuid
+                description: Job ID
+              app_name:
+                type: string
+                description: App name
+              state:
+                type: string
+                description: State of the job
+              timestamp:
+                type: string
+                description: Creation/Update timestamp of the person record
