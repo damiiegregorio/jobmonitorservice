@@ -35,6 +35,7 @@ paths:
                   description: App name
                 state:
                   type: string
+                  enum: [STARTED, FINISHED, ERROR]
                   description: State
                 timestamp:
                   type: string
@@ -53,13 +54,23 @@ paths:
             type: object
             required:
               - app_name
+              - job_id
+              - state
             properties:
+              job_id:
+                type: string
+                format: uuid
+                description: Job ID
               app_name:
                 type: string
                 description: App name
               state:
                 type: string
+                enum: [STARTED, FINISHED, ERROR]
                 description: State
+              date_created:
+                type: string
+                description: Creation/Update timestamp of the job
       responses:
         201:
           description: Successfully created person
@@ -94,6 +105,7 @@ paths:
                 description: App name
               state:
                 type: string
+                enum: [STARTED, FINISHED, ERROR]
                 description: State
               timestamp:
                 type: string
@@ -126,12 +138,15 @@ paths:
           in: path
           description: job_id the person to update
           type: string
-          format: uuid
           required: True
         - name: job
           in: body
           schema:
             type: object
+            required:
+              - job_id
+              - app_name
+              - state
             properties:
               job_id:
                 type: string
@@ -142,6 +157,7 @@ paths:
                 description: App name
               state:
                 type: string
+                enum: [STARTED, FINISHED, ERROR]
                 description: State of the job
               timestamp:
                 type: string
@@ -149,18 +165,4 @@ paths:
       responses:
         200:
           description: Successfully updated person
-          schema:
-            properties:
-              job_id:
-                type: string
-                format: uuid
-                description: Job ID
-              app_name:
-                type: string
-                description: App name
-              state:
-                type: string
-                description: State of the job
-              timestamp:
-                type: string
-                description: Creation/Update timestamp of the person record
+

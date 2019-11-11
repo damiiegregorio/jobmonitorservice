@@ -13,7 +13,7 @@ app = connex_app.app
 
 # Configure the SQLAlchemy part of the app instance
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:novirus123@localhost/job_monitoring_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:novirus123@host.docker.internal:5432/job_monitoring_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
